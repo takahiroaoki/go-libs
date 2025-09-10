@@ -1,0 +1,8 @@
+name: Lint
+description: Lint
+runs:
+  using: "composite"
+  steps:
+    - name: Lint
+      run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8 && golangci-lint run
+      shell: sh
