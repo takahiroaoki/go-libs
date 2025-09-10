@@ -14,24 +14,24 @@ type Time interface {
 	Time() time.Time
 }
 
-type iTime struct {
+type timeImpl struct {
 	time time.Time
 }
 
-func (it *iTime) Format(layout string) string {
-	return it.time.Format(layout)
+func (ti *timeImpl) Format(layout string) string {
+	return ti.time.Format(layout)
 }
 
-func (it *iTime) Time() time.Time {
-	return it.time
+func (ti *timeImpl) Time() time.Time {
+	return ti.time
 }
 
 func NewTime(t time.Time) Time {
-	return &iTime{time: t.In(location)}
+	return &timeImpl{time: t.In(location)}
 }
 
 var Now = func() Time {
-	return &iTime{
+	return &timeImpl{
 		time: time.Now().In(location),
 	}
 }
