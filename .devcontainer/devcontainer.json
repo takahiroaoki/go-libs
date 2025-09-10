@@ -1,6 +1,6 @@
 {
 	"name": "go-libs",
-  "image": "golang:1.24.5-alpine3.22",
+	"image": "golang:1.24.5-alpine3.22",
 	"workspaceFolder": "/workspaces/go-libs",
 	"customizations": {
 		"vscode": {
