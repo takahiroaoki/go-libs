@@ -2,6 +2,7 @@
 	"name": "go-libs",
 	"image": "golang:1.24.5-alpine3.22",
 	"workspaceFolder": "/workspaces/go-libs",
+	"postCreateCommand": "apk add git",
 	"customizations": {
 		"vscode": {
 			"extensions": [
