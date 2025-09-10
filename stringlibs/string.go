@@ -1,4 +1,4 @@
-package string
+package stringlibs
 
 // PadStart inserts padStr before orgStr until its length reaches to untilLen.
 func PadStart(orgStr, padStr string, untilLen int) string {
