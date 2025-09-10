@@ -1,4 +1,4 @@
-package slice
+package slicelibs
 
 // FindFirst returns the index of the first element in elems that satisfies the predicate f.
 func FindFirst[T any](elems []T, f func(idx int, elem T) bool) (idx int) {
