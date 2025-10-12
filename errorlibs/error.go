@@ -25,6 +25,7 @@ const (
 
 type Err interface {
 	Error() string
+	ErrorWithStackTrace() string
 	Cause() ErrorCause
 	LogLevel() LogLevel
 }
