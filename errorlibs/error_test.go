@@ -157,6 +157,10 @@ func TestNewErr(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			got := NewErr(tt.err, tt.cause, tt.logLevel)
+			if tt.want == nil {
+				assert.Nil(t, got)
+				return
+			}
 			assert.Equal(t, tt.want.Error(), got.Error())
 			assert.Equal(t, tt.want.Cause(), got.Cause())
 			assert.Equal(t, tt.want.LogLevel(), got.LogLevel())
