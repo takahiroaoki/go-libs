@@ -2,6 +2,7 @@ package errorlibs
 
 import (
 	"errors"
+	"runtime"
 )
 
 type ErrorCause int
@@ -24,14 +25,16 @@ const (
 
 type Err interface {
 	Error() string
+	ErrorWithStackTrace() string
 	Cause() ErrorCause
 	LogLevel() LogLevel
 }
 
 type errImpl struct {
-	err      error
-	cause    ErrorCause
-	logLevel LogLevel
+	err        error
+	cause      ErrorCause
+	logLevel   LogLevel
+	stackTrace string
 }
 
 func (ei *errImpl) Error() string {
@@ -39,6 +42,13 @@ func (ei *errImpl) Error() string {
 		return ""
 	}
 	return ei.err.Error()
+}
+
+func (ei *errImpl) ErrorWithStackTrace() string {
+	if ei == nil || ei.err == nil {
+		return ""
+	}
+	return ei.err.Error() + "\n" + ei.stackTrace
 }
 
 func (ei *errImpl) Cause() ErrorCause {
@@ -59,10 +69,14 @@ func NewErr(err error, cause ErrorCause, logLevel LogLevel) Err {
 	if err == nil {
 		return nil
 	}
+	stackTrace := make([]byte, 2048)
+	n := runtime.Stack(stackTrace, false)
+
 	return &errImpl{
-		err:      err,
-		cause:    cause,
-		logLevel: logLevel,
+		err:        err,
+		cause:      cause,
+		logLevel:   logLevel,
+		stackTrace: string(stackTrace[:n]),
 	}
 }
 
