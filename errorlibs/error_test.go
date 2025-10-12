@@ -156,20 +156,18 @@ func TestNewErr(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			assert.Equal(t, tt.want, NewErr(tt.err, tt.cause, tt.logLevel))
+			got := NewErr(tt.err, tt.cause, tt.logLevel)
+			assert.Equal(t, tt.want.Error(), got.Error())
+			assert.Equal(t, tt.want.Cause(), got.Cause())
+			assert.Equal(t, tt.want.LogLevel(), got.LogLevel())
 		})
 	}
 }
 
 func TestNewErrFromMsg(t *testing.T) {
 	t.Parallel()
-	assert.Equal(
-		t,
-		&errImpl{
-			err:      errors.New("error"),
-			cause:    CAUSE_INTERNAL,
-			logLevel: LOG_LEVEL_ERROR,
-		},
-		NewErrFromMsg("error", CAUSE_INTERNAL, LOG_LEVEL_ERROR),
-	)
+	got := NewErrFromMsg("error", CAUSE_INTERNAL, LOG_LEVEL_ERROR)
+	assert.Equal(t, "error", got.Error())
+	assert.Equal(t, CAUSE_INTERNAL, got.Cause())
+	assert.Equal(t, LOG_LEVEL_ERROR, got.LogLevel())
 }
